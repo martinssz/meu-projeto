@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de CPF Aleatório</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gerador de CPF Aleatório</h1>
+    <p>Clique no botão abaixo para gerar um CPF aleatório:</p>
+    <button id="gerarCpfBtn">Gerar CPF</button>
+    <p id="cpfGerado"></p>
+
+    <script>
+        function gerarCPF() {
+            var cpf = '';
+            for (var i = 0; i < 9; i++) {
+                cpf += Math.floor(Math.random() * 10);
+            }
+
+            var soma = 0;
+            for (var i = 0; i < 9; i++) {
+                soma += cpf.charAt(i) * (10 - i);
+            }
+
+            var resto = soma % 11;
+            var digito1 = resto < 2 ? 0 : 11 - resto;
+
+            cpf += digito1;
+
+            soma = 0;
+            for (var i = 0; i < 10; i++) {
+                soma += cpf.charAt(i) * (11 - i);
+            }
+
+            resto = soma % 11;
+            var digito2 = resto < 2 ? 0 : 11 - resto;
+
+            cpf += digito2;
+
+            return cpf.substring(0, 3) + '.' + cpf.substring(3, 6) + '.' + cpf.substring(6, 9) + '-' + cpf.substring(9);
+        }
+
+        document.getElementById('gerarCpfBtn').addEventListener('click', function() {
+            document.getElementById('cpfGerado').textContent = gerarCPF();
+        });
+    </script>
+</body>
+</html>
